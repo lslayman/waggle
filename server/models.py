@@ -7,6 +7,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-pets.user', '-pets.pet_photos.pet')
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
@@ -20,12 +22,17 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    def __repr__(self):
+        return f'<User {self.id}: {self.username}>'
+
 class Pet(db.Model, SerializerMixin):
     __tablename__ = 'pets'
 
+    serialize_rules = ('-organization.pets', '-photos.pet')
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    organization_id = db.Column(db.Integer, ForeignKey('organizations.id'))
+    organization_id = db.Column(db.String, db.ForeignKey('organizations.id'))
     species = db.Column(db.String, nullable=False)
     breed = db.Column(db.ARRAY(db.String), nullable=False)
     age = db.Column(db.String, nullable=False)
@@ -48,8 +55,13 @@ class Pet(db.Model, SerializerMixin):
     organization = db.relationship('Organization', backref='pets')
     photos = db.relationship('PetPhoto', backref='pet')
 
+    def __repr__(self):
+        return f'<Pet {self.id}: {self.name}>'
+
 class PetPhoto(db.Model, SerializerMixin):
     __tablename__ = 'pet_photos'
+
+    serialize_rules = ('-pet.pet_photos')
 
     id = db.Column(db.Integer, primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
@@ -60,19 +72,27 @@ class PetPhoto(db.Model, SerializerMixin):
 
     pet = db.relationship('Pet', backref='pet_photos')
 
+    def __repr__(self):
+        return f'<PetPhoto id={self.id}: pet_id={self.pet_id}>'
+
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
+
+    serialize_rules = ('-user.favorites', '-pet.favorites')
 
     id = db.Column(db.Integer, primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    def __repr__(self):
+        return f'<Favorite id={self.id}, pet_id={self.pet_id}, user_id={self.user_id}>'
     
 class Organization(db.Model, SerializerMixin):
     __tablename__ = 'organizations'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
     url = db.Column(db.String)
     phone_number = db.Column(db.String)
@@ -88,9 +108,15 @@ class Organization(db.Model, SerializerMixin):
 
     pets = db.relationship('Pet', backref='organization')
 
+    def __repr__(self):
+        return f'<Organization {self.id}: {self.name}>'
+
 class Admin(db.Model, SerializerMixin):
     __tablename__ = 'admins'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    organization_id = db.Column(db.String, db.ForeignKey('organizations.id'))
+
+    def __repr__(self):
+        return f'<Admin id={self.id}, user_id={self.user_id}, organization={self.organization_id}>'
