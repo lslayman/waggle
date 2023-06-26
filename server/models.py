@@ -25,6 +25,30 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<User {self.id}: {self.username}>'
     
+    @validates('username')
+    def validate_username(self, key, username):
+        usernames = db.session.query(User.username).all()
+        if not username:
+            raise ValueError("Username required.")
+        elif username in usernames:
+            raise ValueError("That username has already been taken. Please create a unique username.")
+        return username
+    
+    @validates('email')
+    def validate_email(self, key, email):
+        emails = db.session.query(User.email).all()
+        if not email:
+            raise ValueError("Email address required.")
+        elif '@' not in email:
+            raise ValueError("Please enter a valid email address.")
+        elif email in emails:
+            raise ValueError("There is already an account registered to that email address.")
+        
+    @validates('password')
+    def validate_password(self, key, password):
+        if not password:
+            raise ValueError("Password required.")
+    
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -69,6 +93,42 @@ class Pet(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Pet {self.id}: {self.name}>'
+    
+    @validates('name')
+    def validate_name(self, key, name):
+        if not name:
+            raise ValueError('Name is a required field.')
+
+    @validates('species')
+    def validate_species(self, key, species):
+        if not species:
+            raise ValueError('Species is a required field.')
+
+    @validates('breed')
+    def validate_breed(self, key, breed):
+        if not breed:
+            raise ValueError('Breed is a required field.')
+
+    @validates('age')
+    def validate_age(self, key, age):
+        if not age:
+            raise ValueError('Age is a required field.')
+
+    @validates('gender')
+    def validate_gender(self, key, gender):
+        if not gender:
+            raise ValueError('Gender is a required field.')
+
+    @validates('size')
+    def validate_size(self, key, size):
+        if not size:
+            raise ValueError('Size is a required field.')
+
+    @validates('color')
+    def validate_color(self, key, color):
+        if not color:
+            raise ValueError('Color is a required field.')
+
 
 class PetPhoto(db.Model, SerializerMixin):
     __tablename__ = 'pet_photos'

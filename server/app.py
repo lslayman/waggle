@@ -3,12 +3,12 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, jsonify, make_response, session
 from flask_restful import Resource
 
 # Local imports
-from config import app, db, api
-from models import User, Recipe
+from config import app, db, api, bcrypt
+from models import User, Pet, PetPhoto, Favorite, Organization, Admin
 
 # Views go here!
 
