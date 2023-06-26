@@ -49,17 +49,17 @@ class User(db.Model, SerializerMixin):
         if not password:
             raise ValueError("Password required.")
     
-    @hybrid_property
-    def password_hash(self):
-        return self._password_hash
+    # @hybrid_property
+    # def password_hash(self):
+    #     return self._password_hash
     
-    @_password_hash.setter
-    def password(self, password):
-        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
+    # @_password_hash.setter
+    # def password(self, password):
+    #     password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+    #     self._password_hash = password_hash.decode('utf-8')
 
-    def authenticate(self, password):
-        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    # def authenticate(self, password):
+    #     return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
 class Pet(db.Model, SerializerMixin):
     __tablename__ = 'pets'
@@ -70,11 +70,11 @@ class Pet(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     organization_id = db.Column(db.String, db.ForeignKey('organizations.id'))
     species = db.Column(db.String, nullable=False)
-    breed = db.Column(db.ARRAY(db.String), nullable=False)
+    breed = db.Column(db.String, nullable=False)
     age = db.Column(db.String, nullable=False)
     gender = db.Column(db.String, nullable=False)
     size = db.Column(db.String, nullable=False)
-    color = db.Column(db.ARRAY(db.String), nullable=False)
+    color = db.Column(db.String, nullable=False)
     coat = db.Column(db.String)
     status = db.Column(db.String)
     good_with_children = db.Column(db.Boolean)
@@ -182,6 +182,11 @@ class Organization(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Organization {self.id}: {self.name}>'
+    
+    @validates('name')
+    def validate_name(self, key, name):
+        if not name:
+            raise ValueError('Name is a required field.')
 
 class Admin(db.Model, SerializerMixin):
     __tablename__ = 'admins'
