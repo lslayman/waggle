@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 # Standard library imports
+import datetime
+import logging
 
 # Remote library imports
 from flask import request, jsonify, make_response, session
@@ -8,10 +10,50 @@ from functools import wraps
 from flask_restful import Resource
 
 # Local imports
-from config import app, db, api, bcrypt
+from config import app, db, api, bcrypt, requests
 from models import User, Pet, PetPhoto, Favorite, Organization, Admin
 
+petfinder_token = None
+TOKEN_EXPIRES_IN = 3600
+
+logging.basicConfig(level=logging.DEBUG)
+
 # Views go here!
+
+# class ApiProxy(Resource):
+
+class ExternalPets(Resource):
+    def get(self):
+        global petfinder_token
+
+        if check_token_expiration():
+            logging.debug("Token expired. Renewing token.")
+            renewed_token = renew_token_request()
+            if renewed_token:
+                token = renewed_token['access_token']
+            else:
+                logging.debug("Failed to renew token.")
+                return{'error': 'An error has occurred.'}
+            
+        else:
+            token = request_token()
+            if not token:
+                logging.debug("Failed to obtain token.")
+                return{'error': 'An error has occurred.'}
+        
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-type': 'application/json',
+        }
+        
+        response = requests.get('https://api.petfinder.com/v2/animals', headers=headers)
+
+        if response.ok:
+            data = response.json()
+            return data
+        else: logging.debug(f"API request failed. Response:{response.status_code}, {response.text}")
+        
+        return{'error': 'An error occurred'}
 
 class Users(Resource):
 
@@ -274,7 +316,7 @@ class FavoritesById(Resource):
         except:
             return{"error": "404: Favorite not found"}, 404
 
-
+api.add_resource(ExternalPets, '/external-pets')
 api.add_resource(Users, '/users')
 api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Pets, '/pets')
@@ -282,6 +324,65 @@ api.add_resource(PetsById, '/pets/<int:id>')
 api.add_resource(PetPhotos, '/petphotos')
 api.add_resource(Favorites, '/users/,<int:user_id>/favorites')
 api.add_resource(FavoritesById, '/users/,<int:user_id>/favorites/<pet_id>')
+
+# Helper functions
+
+def request_token():
+    global petfinder_token
+
+    if petfinder_token is None or check_token_expiration():
+
+        response = requests.post('https://api.petfinder.com/v2/oauth2/token', data={
+            'grant_type': 'client_credentials',
+            'client_id': 'Ojnfj55FZz9trouThMBJZoXo50gkbFaMWLkRLtPVcwW2CLwvQt',
+            'client_secret': 'wxNNLCvU3XXCeiJFdlwSLCVRLN6P9Ni3vmmZs5FJ',
+        })
+
+        if response.ok:
+            data=response.json()
+            petfinder_token = {
+                'access_token': data['access_token'],
+                'expiration_time': calculate_time_remaining(data['expires_in'])
+            }
+        else:
+            petfinder_token = None
+
+    return petfinder_token
+
+def calculate_time_remaining():
+    current_time = datetime.datetime.now()
+    expiration_time = current_time + datetime.timedelta(seconds=TOKEN_EXPIRES_IN)
+    return expiration_time
+
+def check_token_expiration():
+    global petfinder_token
+
+    if petfinder_token and 'expiration_time' in petfinder_token:
+        expiration_time = petfinder_token['expiration_time']
+        current_time = datetime.datetime.now()
+        if expiration_time > current_time:
+            return False
+    return True
+    
+def renew_token_request():
+    global petfinder_token
+
+    response = requests.post('https://api.petfinder.com/v2/oauth2/token', data={
+            'grant_type': 'client_credentials',
+            'client_id': 'Ojnfj55FZz9trouThMBJZoXo50gkbFaMWLkRLtPVcwW2CLwvQt',
+            'client_secret': 'wxNNLCvU3XXCeiJFdlwSLCVRLN6P9Ni3vmmZs5FJ',
+    })
+
+    if response.ok:
+        data = response.json()
+        petfinder_token = {
+            'access_token': data['access_token'],
+            'expiration_time': calculate_time_remaining()
+        }
+        return petfinder_token
+    else:
+        petfinder_token = None
+        return None
 
 
 if __name__ == '__main__':
