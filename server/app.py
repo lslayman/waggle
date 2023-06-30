@@ -20,10 +20,12 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Views go here!
 
-# class ApiProxy(Resource):
-
 class ExternalPets(Resource):
     def get(self):
+        # param1 = request.args.get('param1')
+        # param2 = request.args.get('param2')
+        # print(param1, param2)
+
         global petfinder_token
 
         if check_token_expiration():
@@ -40,10 +42,14 @@ class ExternalPets(Resource):
             if not token:
                 logging.debug("Failed to obtain token.")
                 return{'error': 'An error has occurred.'}
-        
+
+        if type(token) is str:
+            real_token = token
+        else:
+            real_token = token['access_token']
         headers = {
-            'Authorization': f'Bearer {token}',
-            'Content-type': 'application/json',
+            'Authorization': f'Bearer {real_token}',
+            'Content-Type': 'application/json',
         }
         
         response = requests.get('https://api.petfinder.com/v2/animals', headers=headers)

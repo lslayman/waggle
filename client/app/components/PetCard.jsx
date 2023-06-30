@@ -1,11 +1,30 @@
 'use client'
 
-import React, { useState } from 'react';
+import Image from 'next/image'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUp, faCircleDown } from "@fortawesome/free-solid-svg-icons";
+import PlaceholderImage from './Placeholder';
 
-export default function PetCard({pet}) {
+export default function PetCard({ pet }) {
     const [isPreview, setIsPreview] = useState(true)
+    const [orgName, setOrgName] = useState('');
+
+    console.log(pet.photos[0])
+
+    useEffect(() => {
+      const fetchOrgName = async () => {
+        try {
+          const response = await axios.get(`/api/organizations/${petData.organization_id}`);
+          const orgData = response.data;
+          setOrgName(orgData.name);
+        } catch (error) {
+          console.error('Error fetching organization:', error);
+        }
+      };
+      fetchOrgName();
+    }, [pet.organization_id])
 
     const toggleCardView = () => {
         setIsPreview(!isPreview)
@@ -18,7 +37,17 @@ export default function PetCard({pet}) {
               //Render card preview
               <>
                 <div className="relative">
-                  <img className="w-full" src={pet.photo} alt={pet.name} />
+                  {pet.photos && pet.photos.length > 0 ? (
+                    <Image
+                      className="w-full"
+                      src={pet.photos[0].url}
+                      alt={pet.name}
+                      width={500} // Set the desired width of the image
+                      height={500} // Set the desired height of the image
+                    />
+                  ) : (
+                    <PlaceholderImage />
+                  )}
                   <button onClick={toggleCardView} className="absolute right-8 transform -translate-y-1/2 -transition-transform hover:scale-110">
                       <FontAwesomeIcon
                         style={{color: "gold" }}
@@ -30,10 +59,10 @@ export default function PetCard({pet}) {
                 <div className="content flex-2 p-4 bg-white text-gray-500">
                   <h2 className="name text-2xl font-bold">{pet.name}</h2>
                     <span className="text-sm">
-                      <p>{pet.breed}
-                      <br />
-                      {pet.organization} • {pet.location}
-                      </p>
+                      {pet.breeds && pet.breeds.primary && (
+                        <p>{pet.breeds.primary}</p>
+                      )}
+                      <p>{orgName} • {pet.location}</p>
                     </span>
                 </div>
               </>
@@ -41,7 +70,18 @@ export default function PetCard({pet}) {
                 //Render full card
                 <>
                   <div className="relative">
-                    <img className="w-full" src={pet.photo} alt={pet.name} />
+
+                  {pet.photos && pet.photos.length > 0 ? (
+                    <Image
+                      className="w-full"
+                      src={pet.photos[0].url}
+                      alt={pet.name}
+                      width={500} // Set the desired width of the image
+                      height={500} // Set the desired height of the image
+                    />
+                  ) : (
+                    <PlaceholderImage />
+                  )}
                     <button onClick={toggleCardView} className="absolute right-8 transform -translate-y-1/2 -transition-transform hover:scale-110">
                       <FontAwesomeIcon
                         style={{color: "gold" }}
@@ -53,10 +93,10 @@ export default function PetCard({pet}) {
                   <div className="content flex-2 p-4 bg-white text-gray-500">
                     <h2 className="name text-2xl font-bold">{pet.name}</h2>
                       <span className="text-sm">
-                        <p>{pet.breed}
-                        <br />
-                        {pet.organization} • {pet.location}
-                        </p>
+                      {pet.breeds && pet.breeds.primary && (
+                        <p>{pet.breeds.primary}</p>
+                      )}
+                      <p>{orgName} • {pet.location}</p>
                         <br />
                         <p>{pet.age} • {pet.gender} • {pet.size} • {pet.color}</p>
                       </span>
@@ -66,13 +106,13 @@ export default function PetCard({pet}) {
                       <br />
                       <span className="text-sm">
                         <h3 className="uppercase">Coat Length</h3>
-                        <p>{pet.coat_length}</p>
+                        <p>{pet.coat}</p>
                         <br />
                         <h3 className="uppercase"> House-Trained</h3>
-                        <p>{pet.house_trained}</p>
+                        <p>{pet.attributes.house_trained}</p>
                         <br />
                         <h3 className="uppercase">Health</h3>
-                        <p>{pet.vaccinations}, {pet.spayed_neutered}</p>
+                        <p>{pet.attributes.shots_current}, {pet.attributes.spayed_neutered}</p>
                         <br />
                         <h3 className="uppercase">Adoption Fee</h3>
                         <p>{pet.adoption_fee}</p>
