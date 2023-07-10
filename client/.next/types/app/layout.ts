@@ -1,4 +1,4 @@
-// File: /Users/fisadmin/Development/code/waggle/client/app/layout.js
+// File: /home/lslayman/Development/code/waggle/client/app/layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

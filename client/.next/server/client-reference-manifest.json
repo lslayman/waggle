@@ -56,22 +56,6 @@
         "async": false
       }
     },
-    "(app-client)/./app/components/NavBar.jsx": {
-      "*": {
-        "id": "(sc_client)/./app/components/NavBar.jsx",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
-    "(app-client)/./node_modules/next/dist/client/link.js": {
-      "*": {
-        "id": "(sc_client)/./node_modules/next/dist/client/link.js",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
     "(app-client)/./app/public/images/placeholder.jpg": {
       "*": {
         "id": "(sc_client)/./app/public/images/placeholder.jpg",
@@ -111,11 +95,43 @@
         "chunks": [],
         "async": false
       }
+    },
+    "(app-client)/./app/public/images/logo w name.png": {
+      "*": {
+        "id": "(sc_client)/./app/public/images/logo w name.png",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/components/NavBar.jsx": {
+      "*": {
+        "id": "(sc_client)/./app/components/NavBar.jsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/link.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/link.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/(auth)/login/page.jsx": {
+      "*": {
+        "id": "(sc_client)/./app/(auth)/login/page.jsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
     }
   },
   "edgeSSRModuleMapping": {},
   "clientModules": {
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/app-router.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/app-router.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/app-router.js",
       "name": "*",
       "chunks": [
@@ -123,7 +139,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/app-router.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/app-router.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/app-router.js",
       "name": "*",
       "chunks": [
@@ -131,7 +147,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/error-boundary.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/error-boundary.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/error-boundary.js",
       "name": "*",
       "chunks": [
@@ -139,7 +155,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/error-boundary.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/error-boundary.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/error-boundary.js",
       "name": "*",
       "chunks": [
@@ -147,7 +163,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/redirect-boundary.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/redirect-boundary.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/redirect-boundary.js",
       "name": "*",
       "chunks": [
@@ -155,7 +171,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/redirect-boundary.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/redirect-boundary.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/redirect-boundary.js",
       "name": "*",
       "chunks": [
@@ -163,7 +179,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/router-reducer/fetch-server-response.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/router-reducer/fetch-server-response.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/router-reducer/fetch-server-response.js",
       "name": "*",
       "chunks": [
@@ -171,7 +187,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/router-reducer/fetch-server-response.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/router-reducer/fetch-server-response.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/router-reducer/fetch-server-response.js",
       "name": "*",
       "chunks": [
@@ -179,7 +195,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/shared/lib/app-router-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/app-router-context.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/app-router-context.js",
       "name": "*",
       "chunks": [
@@ -187,7 +203,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/app-router-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/app-router-context.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/app-router-context.js",
       "name": "*",
       "chunks": [
@@ -195,7 +211,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/shared/lib/hooks-client-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/hooks-client-context.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/hooks-client-context.js",
       "name": "*",
       "chunks": [
@@ -203,7 +219,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/hooks-client-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/hooks-client-context.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/hooks-client-context.js",
       "name": "*",
       "chunks": [
@@ -211,7 +227,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/shared/lib/server-inserted-html.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/server-inserted-html.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/server-inserted-html.js",
       "name": "*",
       "chunks": [
@@ -219,7 +235,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/server-inserted-html.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/server-inserted-html.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/server-inserted-html.js",
       "name": "*",
       "chunks": [
@@ -227,7 +243,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/layout-router.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/layout-router.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
       "name": "*",
       "chunks": [
@@ -235,7 +251,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/layout-router.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/layout-router.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
       "name": "*",
       "chunks": [
@@ -243,7 +259,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/render-from-template-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/render-from-template-context.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js",
       "name": "*",
       "chunks": [
@@ -251,7 +267,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/render-from-template-context.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/render-from-template-context.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js",
       "name": "*",
       "chunks": [
@@ -259,7 +275,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js",
       "name": "*",
       "chunks": [
@@ -267,7 +283,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/components/static-generation-searchparams-bailout-provider.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/components/static-generation-searchparams-bailout-provider.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js",
       "name": "*",
       "chunks": [
@@ -275,31 +291,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/app/components/NavBar.jsx": {
-      "id": "(app-client)/./app/components/NavBar.jsx",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/link.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/link.js",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/link.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/link.js",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/Users/fisadmin/Development/code/waggle/client/app/public/images/placeholder.jpg": {
+    "/home/lslayman/Development/code/waggle/client/app/public/images/placeholder.jpg": {
       "id": "(app-client)/./app/public/images/placeholder.jpg",
       "name": "*",
       "chunks": [
@@ -307,7 +299,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/app/components/PetCard.jsx": {
+    "/home/lslayman/Development/code/waggle/client/app/components/PetCard.jsx": {
       "id": "(app-client)/./app/components/PetCard.jsx",
       "name": "*",
       "chunks": [
@@ -315,7 +307,7 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/app/page.js": {
+    "/home/lslayman/Development/code/waggle/client/app/page.js": {
       "id": "(app-client)/./app/page.js",
       "name": "*",
       "chunks": [
@@ -323,55 +315,95 @@
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/client/image.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/image.js": {
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "*",
       "chunks": [
-        "app/page:static/chunks/app/page.js"
+        "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/client/image.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/image.js": {
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "*",
       "chunks": [
-        "app/page:static/chunks/app/page.js"
+        "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/shared/lib/head.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/head.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "*",
       "chunks": [
-        "app/page:static/chunks/app/page.js"
+        "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
     },
-    "/Users/fisadmin/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/head.js": {
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/head.js": {
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "*",
       "chunks": [
-        "app/page:static/chunks/app/page.js"
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/app/public/images/logo w name.png": {
+      "id": "(app-client)/./app/public/images/logo w name.png",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/app/components/NavBar.jsx": {
+      "id": "(app-client)/./app/components/NavBar.jsx",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/app/(auth)/login/page.jsx": {
+      "id": "(app-client)/./app/(auth)/login/page.jsx",
+      "name": "*",
+      "chunks": [
+        "app/(auth)/login/page:static/chunks/app/(auth)/login/page.js"
       ],
       "async": false
     }
   },
   "entryCSSFiles": {
-    "/Users/fisadmin/Development/code/waggle/client/app/layout": {
+    "/home/lslayman/Development/code/waggle/client/app/page": {
+      "modules": [],
+      "files": []
+    },
+    "/home/lslayman/Development/code/waggle/client/app/layout": {
       "modules": [
-        "/Users/fisadmin/Development/code/waggle/client/app/globals.css",
-        "/Users/fisadmin/Development/code/waggle/client/node_modules/@fortawesome/fontawesome-svg-core/styles.css",
-        "/Users/fisadmin/Development/code/waggle/client/node_modules/next/font/google/target.css?{\"path\":\"app/layout.js\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
+        "/home/lslayman/Development/code/waggle/client/app/globals.css",
+        "/home/lslayman/Development/code/waggle/client/node_modules/@fortawesome/fontawesome-svg-core/styles.css",
+        "/home/lslayman/Development/code/waggle/client/node_modules/next/font/google/target.css?{\"path\":\"app/layout.js\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
       ],
       "files": [
         "static/css/app/layout.css"
       ]
     },
-    "/Users/fisadmin/Development/code/waggle/client/app/page": {
-      "modules": [],
-      "files": []
-    },
-    "/Users/fisadmin/Development/code/waggle/client/app/(auth)/login/page": {
+    "/home/lslayman/Development/code/waggle/client/app/(auth)/login/page": {
       "modules": [],
       "files": []
     }
