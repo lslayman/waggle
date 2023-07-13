@@ -10,7 +10,6 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-pets.user', '-pets.pet_photos.pet')
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String)
@@ -23,16 +22,7 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     def __repr__(self):
-        return f'<User {self.id}: {self.username}>'
-    
-    @validates('username')
-    def validate_username(self, key, username):
-        usernames = db.session.query(User.username).all()
-        if not username:
-            raise ValueError("Username required.")
-        elif username in usernames:
-            raise ValueError("That username has already been taken. Please create a unique username.")
-        return username
+        return f'<User {self.id}: {self.email}>'
     
     @validates('email')
     def validate_email(self, key, email):

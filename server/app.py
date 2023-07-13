@@ -22,9 +22,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 class ExternalPets(Resource):
     def get(self):
-        # param1 = request.args.get('param1')
-        # param2 = request.args.get('param2')
-        # print(param1, param2)
 
         global petfinder_token
 
@@ -70,7 +67,6 @@ class Users(Resource):
     def post(self):
 
         new_user = User(
-            username=request.form['username'],
             email=request.form['email'],
             password=request.form['password'],
             first_name=request.form['first_name'],
@@ -321,6 +317,56 @@ class FavoritesById(Resource):
             return{}, 204
         except:
             return{"error": "404: Favorite not found"}, 404
+        
+class Join(Resource):
+
+    def post(self):
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if not email or not password:
+            return make_response(jsonify({'error': 'Email and password are required.'}), 400)
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            return make_response(jsonify({'error': 'An account with this email already exists.'}), 400)
+
+        new_user = User(email=email, password=password)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return make_response(jsonify({'message': 'Account created successfully.'}), 201)
+    
+class Login(Resource):
+
+    def post(self):
+        data = request.get_json()
+
+        email = data['email']
+        password = data['password']
+        
+        user = User.query.filter_by(email=email).first()
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(), 200)
+        else:
+            return make_response("Invalid credentials", 401)
+        
+class CheckSession(Resource):
+
+    def get(self):
+        if session.get('user_id'):
+            user = User.query.filter(User.id == session['user_id']).first()
+            return user.to_dict(), 200
+        return None, 404
+
+class Logout(Resource):
+
+    def delete(self):
+        session['user_id'] = None
+        return {'message': '204: No Content'}, 204
+
 
 api.add_resource(ExternalPets, '/external-pets')
 api.add_resource(Users, '/users')
@@ -330,6 +376,10 @@ api.add_resource(PetsById, '/pets/<int:id>')
 api.add_resource(PetPhotos, '/petphotos')
 api.add_resource(Favorites, '/users/,<int:user_id>/favorites')
 api.add_resource(FavoritesById, '/users/,<int:user_id>/favorites/<pet_id>')
+api.add_resource(Join, '/join')
+api.add_resource(Login, '/login')
+api.add_resource(CheckSession, '/check-session')
+api.add_resource(Logout, '/logout')
 
 # Helper functions
 
