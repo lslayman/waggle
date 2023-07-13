@@ -3,18 +3,19 @@ const nextConfig = {
     reactStrictMode: true,
   }
   
-  module.exports = () => {
-    const rewrites = () => {
+  module.exports = {
+    //reactStrictMode: true,
+    images: {
+      domains: ['dl5zpyw5k3jeb.cloudfront.net'],
+    },
+    async rewrites() {
       return [
         {
           source: "/api/:path*",
           destination: "http://localhost:5555/:path*",
-        }
+        },
       ];
-    };
-    return {
-      rewrites,
-    };
+    },
   };
   
   // module.exports = nextConfig

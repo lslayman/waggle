@@ -4,14 +4,14 @@ import Image from 'next/image'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUp, faCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUp, faCircleDown, faHeart, faXmark, faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from './Placeholder';
 
 export default function PetCard({ pet }) {
     const [isPreview, setIsPreview] = useState(true)
     const [orgName, setOrgName] = useState('');
 
-    console.log(pet.photos[0])
+    console.log(pet)
 
     useEffect(() => {
       const fetchOrgName = async () => {
@@ -30,22 +30,27 @@ export default function PetCard({ pet }) {
         setIsPreview(!isPreview)
     }
 
+
+
     return (
         <>
           <div className="flex justify-center">
-            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+            <div className="w-full max-w-sm rounded overflow-hidden shadow-lg">
               {isPreview ? (
                 //Render card preview
                 <>
                   <div className="relative">
-                    {pet.photos && pet.photos.length > 0 ? (
-                      <Image
-                        className="w-full"
-                        src={pet.photos[0].url}
-                        alt={pet.name}
-                        width={500} // Set the desired width of the image
-                        height={500} // Set the desired height of the image
-                      />
+                  {pet.photos && pet.photos.length > 0 ? (
+                      pet.photos.map((photo, index) => (
+                        <Image 
+                          className="w-full"
+                          key={index}
+                          src={photo.medium}
+                          alt={`Photo ${index + 1}`}
+                          width={500}
+                          height={500}
+                        />
+                      ))
                     ) : (
                       <PlaceholderImage />
                     )}
@@ -66,6 +71,11 @@ export default function PetCard({ pet }) {
                         <p>{orgName} • {pet.location}</p>
                       </span>
                   </div>
+                  <div className="flex justify-center">
+                    <FontAwesomeIcon style={{color: "red"}} icon={faXmark} size="2x"/>
+                    <FontAwesomeIcon style={{color: "gold"}} icon={faStar} size="xl"/>
+                    <FontAwesomeIcon style={{color: "green"}} icon={faHeart} size="2x"/>
+                  </div>
                 </>
               ) : (
                 //Render full card
@@ -73,13 +83,16 @@ export default function PetCard({ pet }) {
                     <div className="relative">
 
                     {pet.photos && pet.photos.length > 0 ? (
-                      <Image
-                        className="w-full"
-                        src={pet.photos[0].url}
-                        alt={pet.name}
-                        width={500}
-                        height={500}
-                      />
+                      pet.photos.map((photo, index) => (
+                        <Image 
+                          className="w-full"
+                          key={index}
+                          src={photo.medium}
+                          alt={`Photo ${index + 1}`}
+                          width={500}
+                          height={500}
+                        />
+                      ))
                     ) : (
                       <PlaceholderImage />
                     )}
@@ -99,7 +112,7 @@ export default function PetCard({ pet }) {
                         )}
                         <p>{orgName} • {pet.location}</p>
                           <br />
-                          <p>{pet.age} • {pet.gender} • {pet.size} • {pet.color}</p>
+                          <p>{pet.age} • {pet.gender} • {pet.size} • {pet.colors.primary}</p>
                         </span>
                         <hr className="my-2 border-gray-300" />
                         <h3 className="font-bold">About</h3>

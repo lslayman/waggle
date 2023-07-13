@@ -36,13 +36,15 @@ class User(db.Model, SerializerMixin):
     
     @validates('email')
     def validate_email(self, key, email):
-        emails = db.session.query(User.email).all()
         if not email:
             raise ValueError("Email address required.")
         elif '@' not in email:
             raise ValueError("Please enter a valid email address.")
-        elif email in emails:
-            raise ValueError("There is already an account registered to that email address.")
+        else:
+            existing_user = User.query.filter(User.email == email).first()
+            if existing_user:
+                raise ValueError("There is already an account registered to that email address.")
+        return email
         
     @validates('password')
     def validate_password(self, key, password):
@@ -88,7 +90,7 @@ class Pet(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    organization = db.relationship('Organization', backref='pets')
+    pet_organization = db.relationship('Organization', backref='pets')
     photos = db.relationship('PetPhoto', backref='pet')
 
     def __repr__(self):
@@ -142,7 +144,7 @@ class PetPhoto(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    pet = db.relationship('Pet', backref='pet_photos')
+    pet_in_photo = db.relationship('Pet', backref='pet_photos')
 
     def __repr__(self):
         return f'<PetPhoto id={self.id}: pet_id={self.pet_id}>'
@@ -178,7 +180,7 @@ class Organization(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    pets = db.relationship('Pet', backref='organization')
+    org_pets = db.relationship('Pet', backref='organization')
 
     def __repr__(self):
         return f'<Organization {self.id}: {self.name}>'
