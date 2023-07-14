@@ -321,17 +321,19 @@ class FavoritesById(Resource):
 class Join(Resource):
 
     def post(self):
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
         email = request.form.get('email')
         password = request.form.get('password')
 
-        if not email or not password:
-            return make_response(jsonify({'error': 'Email and password are required.'}), 400)
+        if not first_name or not last_name or not email or not password:
+            return make_response(jsonify({'error': 'All fields are required.'}), 400)
 
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return make_response(jsonify({'error': 'An account with this email already exists.'}), 400)
 
-        new_user = User(email=email, password=password)
+        new_user = User(first_name=first_name, last_name=last_name, email=email, password=password)
 
         db.session.add(new_user)
         db.session.commit()

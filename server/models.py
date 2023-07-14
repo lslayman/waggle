@@ -12,8 +12,8 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
     avatar = db.Column(db.String)
     bio = db.Column(db.String)
     location = db.Column(db.String)
@@ -23,6 +23,18 @@ class User(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<User {self.id}: {self.email}>'
+
+    @validates('first_name')
+    def validate_first_name(self, key, first_name):
+        if not first_name:
+            raise ValueError("First name required.")
+        return first_name
+    
+    @validates('last_name')
+    def validate_last_name(self, key, last_name):
+        if not last_name:
+            raise ValueError("Last name required.")
+        return last_name
     
     @validates('email')
     def validate_email(self, key, email):
