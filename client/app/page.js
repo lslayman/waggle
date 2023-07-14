@@ -4,24 +4,18 @@
 import React, { useEffect, useState } from 'react';
 import PetCard from './components/PetCard';
 
-export default function Home({ }) {
+export default function Home() {
   const [petData, setPetData] = useState(null)
 
   useEffect(() => {
     fetch('/api/external-pets')
       .then(res => res.json())
       .then(data => setPetData(data))
-    // .catch(error => {
-    //   console.error(error);
-    // });
   }, [])
-
   
   if(!petData) {
     return <div>Loading...</div>
   }
-
-
 
   // const pets = [
   //   {
