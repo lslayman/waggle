@@ -2,36 +2,34 @@
 
 import react, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 
-export default function Join() {
+export default function Join({setUsers}) {
     const [firstName, setFirstName] = useState('')
     const [surname, setSurname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
     const router = useRouter()
 
-    const handleJoin = async (e) => {
+    function handleJoin(e) {
       e.preventDefault();
+      fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName,
+          surname: surname,
+          email: email,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUsers(data); 
+          router.push('/');
+        });
+    }
   
-      if (!firstName || !surname || !email || !password) {
-        setError('All fields are required.');
-        return;
-      } try {
-        const response = await axios.post('/api/join', { firstName, surname, email, password });
   
-        console.log('User joined successfully!', response.data);
-  
-        setEmail('');
-        setPassword('');
-        setError('');
-
-      } catch (error) {
-        console.error('Error joining user:', error);
-        setError('Failed to join. Please try again.')
-      }
-    };
   
     return (
         // join component src: https://tailwindflex.com/bunny/simple-login-form
