@@ -10,6 +10,7 @@ import PlaceholderImage from './Placeholder';
 export default function PetCard({ pet }) {
     const [isPreview, setIsPreview] = useState(true)
     const [orgName, setOrgName] = useState('');
+    const [isFavorite, setIsFavorite] = useState(false)
 
     console.log(pet)
 
@@ -30,7 +31,21 @@ export default function PetCard({ pet }) {
         setIsPreview(!isPreview)
     }
 
+    function handleAddToFavorites(){
+      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
 
+      const formData = new FormData();
+      formData.append('pet_id', pet.id);
+      formData.append('user_id', user.id)
+
+      fetch('/api/favorites', {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JformData,
+      })
+      .then(res => res.json())
+      .then(data => setIsFavorite(data))
+    }
 
     return (
         <>
@@ -73,7 +88,9 @@ export default function PetCard({ pet }) {
                   </div>
                   <div className="flex justify-center">
                     <FontAwesomeIcon style={{color: "red"}} icon={faXmark} size="2x"/>
-                    <FontAwesomeIcon style={{color: "gold"}} icon={faStar} size="xl"/>
+                    <button onClick={handleAddToFavorites}>
+                      <FontAwesomeIcon style={{color: "gold"}} icon={faStar} size="xl"/>
+                    </button>
                     <FontAwesomeIcon style={{color: "green"}} icon={faHeart} size="2x"/>
                   </div>
                 </>
