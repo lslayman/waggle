@@ -3,7 +3,8 @@
 import react, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function Join({setUsers}) {
+export default function Join() {
+    const [users, setUsers] = useState(null)
     const [firstName, setFirstName] = useState('')
     const [surname, setSurname] = useState('')
     const [email, setEmail] = useState('')
@@ -22,14 +23,11 @@ export default function Join({setUsers}) {
           password: password,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setUsers(data); 
-          router.push('/');
-        });
+        .then(res => res.json())
+        .then(data => setUsers(data),
+        router.push('/')
+        );
     }
-  
-  
   
     return (
         // join component src: https://tailwindflex.com/bunny/simple-login-form

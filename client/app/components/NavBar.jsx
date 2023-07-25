@@ -12,6 +12,7 @@ export default function NavBar() {
 		  .then(res => res.json())
 		  .then(data => setUsers(data))
 	  }, [])
+	  console.log(users)
 
 	function handleLogout(e) {
 		e.preventDefault()

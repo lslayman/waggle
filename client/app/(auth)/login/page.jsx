@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
  
-export default function Login({setUsers}) {
+export default function Login() {
+    const [users, setUsers] = useState(null)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
@@ -16,8 +17,8 @@ export default function Login({setUsers}) {
             body: JSON.stringify({email: email, password: password})
         })
         .then(res => res.json())
-        .then(data => {setUsers(data)
-        router.push('/')})
+        .then(data => setUsers(data),
+        router.push('/'))
 
     }
   
