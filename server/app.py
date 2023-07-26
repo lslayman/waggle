@@ -282,8 +282,6 @@ class Favorites(Resource):
         except Exception:
             return {"error":"unable to create favorite!"}, 404
          
-    
-    
 class FavoritesById(Resource):
     def get(self, pet_id):
         
@@ -384,7 +382,7 @@ api.add_resource(Pets, '/pets')
 api.add_resource(PetsById, '/pets/<int:id>')
 api.add_resource(PetPhotos, '/petphotos')
 api.add_resource(Favorites, '/favorites')
-api.add_resource(FavoritesById, '/users/,<int:user_id>/favorites/<pet_id>')
+api.add_resource(FavoritesById, '/favorites/<pet_id>')
 api.add_resource(Join, '/join')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
