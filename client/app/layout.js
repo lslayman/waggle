@@ -2,6 +2,7 @@
 
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { UserContextProvider } from './userContext';
 import NavBar from './components/NavBar'
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -20,13 +21,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" type="image/png" href="/logo.png" />
-      </head>
-      <body className={inter.className}>
-        <NavBar />
-        {children}
-      </body>
+      <UserContextProvider>
+        <head>
+          <link rel="icon" type="image/png" href="/logo.png" />
+        </head>
+        <body className={inter.className}>
+          <NavBar />
+          {children}
+        </body>
+      </UserContextProvider>
     </html>
   )
 }

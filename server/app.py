@@ -259,22 +259,29 @@ class Favorites(Resource):
         return make_response(jsonify(favorites), 200)
     
     def post(self):
-        new_fave = Favorite(
-            pet_id=request.form['pet_id'],
-            user_id=request.form['user_id']
-        )
 
-        db.session.add(new_fave)
-        db.session.commit()
+        try:
 
-        fave_dict = new_fave.to_dict()
+            new_fave = Favorite(
+                pet_id=request.get_json()['pet_id'],
+                user_id=request.get_json()['user_id']
+            )
 
-        response = make_response(
-            fave_dict,
-            201
-        )
+            db.session.add(new_fave)
+            db.session.commit()
 
-        return response
+            fave_dict = new_fave.to_dict()
+
+            response = make_response(
+                fave_dict,
+                201
+            )
+            print(fave_dict)
+
+            return response
+        except Exception:
+            return {"error":"unable to create favorite!"}, 404
+         
     
     
 class FavoritesById(Resource):
@@ -376,7 +383,7 @@ api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Pets, '/pets')
 api.add_resource(PetsById, '/pets/<int:id>')
 api.add_resource(PetPhotos, '/petphotos')
-api.add_resource(Favorites, '/users/,<int:user_id>/favorites')
+api.add_resource(Favorites, '/favorites')
 api.add_resource(FavoritesById, '/users/,<int:user_id>/favorites/<pet_id>')
 api.add_resource(Join, '/join')
 api.add_resource(Login, '/login')

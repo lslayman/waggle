@@ -6,45 +6,61 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUp, faCircleDown, faHeart, faXmark, faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from './Placeholder';
+import { useUserContext } from '@/userContext';
 
 export default function PetCard({ pet }) {
-    const [isPreview, setIsPreview] = useState(true)
-    const [orgName, setOrgName] = useState('');
-    const [isFavorite, setIsFavorite] = useState(false)
+  const [isPreview, setIsPreview] = useState(true)
+  const [orgName, setOrgName] = useState('');
+  const [isFavorite, setIsFavorite] = useState(false)
+  const { user } = useUserContext();
+  // const [users, setUsers] = useState(null)
 
-    console.log(pet)
+	// useEffect(() => {
+	// 	fetch('/api/check-session')
+	// 	  .then(res => res.json())
+	// 	  .then(data => setUsers(data))
+	//   }, [])
 
-    useEffect(() => {
-      const fetchOrgName = async () => {
-        try {
-          const response = await axios.get(`/api/organizations/${petData.organization_id}`);
-          const orgData = response.data;
-          setOrgName(orgData.name);
-        } catch (error) {
-          console.error('Error fetching organization:', error);
-        }
-      };
-      fetchOrgName();
-    }, [pet.organization_id])
+  // console.log(pet)
 
-    const toggleCardView = () => {
-        setIsPreview(!isPreview)
+  useEffect(() => {
+    const fetchOrgName = async () => {
+      try {
+        const response = await axios.get(`/api/organizations/${petData.organization_id}`);
+        const orgData = response.data;
+        setOrgName(orgData.name);
+      } catch (error) {
+        console.error('Error fetching organization:', error);
+      }
+    };
+    fetchOrgName();
+  }, [pet.organization_id])
+
+  const toggleCardView = () => {
+      setIsPreview(!isPreview)
+  }
+
+  function handleAddToFavorites(){
+    setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+
+    // const formData = new FormData();
+    // formData.append('pet_id', pet.id);
+    // formData.append('user_id', user.id)
+    // console.log(formData)
+
+    const petObj = {
+      "pet_id": pet.id,
+      "user_id": user.id
     }
+    console.log(petObj)
 
-    function handleAddToFavorites(){
-      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-
-      const formData = new FormData();
-      formData.append('pet_id', pet.id);
-      formData.append('user_id', user.id)
-
-      fetch('/api/favorites', {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JformData,
-      })
-      .then(res => res.json())
-      .then(data => setIsFavorite(data))
+    fetch('/api/favorites', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(petObj),
+    })
+    .then(res => res.json())
+    .then(data => setIsFavorite(data))
     }
 
     return (
@@ -131,6 +147,13 @@ export default function PetCard({ pet }) {
                           <br />
                           <p>{pet.age} • {pet.gender} • {pet.size} • {pet.colors.primary}</p>
                         </span>
+                        <div className="flex justify-center">
+                          <FontAwesomeIcon style={{color: "red"}} icon={faXmark} size="2x"/>
+                          <button onClick={handleAddToFavorites}>
+                            <FontAwesomeIcon style={{color: "gold"}} icon={faStar} size="xl"/>
+                          </button>
+                          <FontAwesomeIcon style={{color: "green"}} icon={faHeart} size="2x"/>
+                        </div>
                         <hr className="my-2 border-gray-300" />
                         <h3 className="font-bold">About</h3>
                         {/* this section will also have characteristics, good in a home with, etc (if on pet's profile) */}
