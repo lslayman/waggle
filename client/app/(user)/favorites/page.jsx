@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import axios from 'axios';
 
 export default function Favorites(){
@@ -13,15 +14,15 @@ export default function Favorites(){
     }, []);
 
     return (
-      <>
-        <div>
-          <h1>Favorite Pets</h1>
+      <div>
+          <h1>Favorite Pets (click ID number below)</h1>
           <ul>
             {favorites.map((favorite) => (
-                <li key={favorite.id}>{favorite.pet_id}</li>
+                <li key={favorite.id}>
+                  <Link href={`/favorites/${favorite.pet_id}`}>{favorite.pet_id}</Link>
+                </li>
             ))}
           </ul>
-        </div>
-      </>
+      </div>
     );
 }
