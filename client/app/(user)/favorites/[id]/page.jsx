@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import PlaceholderImage from '@/components/Placeholder';
 
-export default function FavoriteById({ params}) {
+export default function FavoriteById({ params }) {
     const [favePet, setFavePet] = useState(null);
 
     useEffect(() => {

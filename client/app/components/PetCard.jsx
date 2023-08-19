@@ -2,26 +2,63 @@
 
 import Image from 'next/image'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUp, faCircleDown, faHeart, faXmark, faStar } from "@fortawesome/free-solid-svg-icons";
+import TinderCard from 'react-tinder-card';
 import PlaceholderImage from './Placeholder';
 import { useUserContext } from '@/userContext';
+
 
 export default function PetCard({ pet }) {
   const [isPreview, setIsPreview] = useState(true)
   const [orgName, setOrgName] = useState('');
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(pet.length - 1)
+  const [lastDirection, setLastDirection] = useState()
+  const currentIndexRef = useRef(currentIndex)
   const { user } = useUserContext();
-  // const [users, setUsers] = useState(null)
 
-	// useEffect(() => {
-	// 	fetch('/api/check-session')
-	// 	  .then(res => res.json())
-	// 	  .then(data => setUsers(data))
-	//   }, [])
+  console.log(pet)
 
-  // console.log(pet)
+  const childRefs = useMemo(
+    () =>
+    Array(pet.length)
+      .fill(0)
+      .map((i) => React.createRef()),
+      []
+  )
+
+  const updateCurrentIndex = (val) => {
+    setCurrentIndex(val)
+    currentIndexRef.current = val
+  }
+
+  const canGoBack = currentIndex < pet.length - 1
+
+  const canSwipe = currentIndex >= 0
+
+  const swiped = (direction, nameToDelete, index) => {
+    setLastDirection(direction)
+    updateCurrentIndex(index - 1)
+  }
+
+  const outOfFrame = (name, idx) => {
+    console.log(`${pet.name} (${idx}) left the screen!`, currentIndexRef.current)
+    currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
+  }
+
+  const swipe = async (dir) => {
+    if (canSwipe && currentIndex < pet.length) {
+      await childRefs[currentIndex].current.swipe(dir)
+    }
+  }
+
+  const goBack = async () => {
+    if (!canGoBack) return
+    const newIndex = currentIndex + 1
+    updateCurrentIndex(newIndex)
+    await childRefs[index].current.restoreCard()
+  }
 
   useEffect(() => {
     const fetchOrgName = async () => {
@@ -66,6 +103,13 @@ export default function PetCard({ pet }) {
     return (
         <>
           <div className="flex justify-center">
+          <TinderCard
+            ref={childRefs[currentIndex]}
+            className='swipe'
+            key={pet.name}
+            onSwipe={(dir) => swiped(dir, pet.name, index)}
+            // onCardLeftScreen={() => outOfFrame(pet.name), index}  
+          >
             <div className="w-full max-w-sm rounded overflow-hidden shadow-lg">
               {isPreview ? (
                 //Render card preview
@@ -181,6 +225,7 @@ export default function PetCard({ pet }) {
                   </>
               )}
             </div>
+          </TinderCard>
           </div>
         </>
     )
