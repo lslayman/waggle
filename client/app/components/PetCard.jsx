@@ -11,15 +11,48 @@ import { useUserContext } from '@/userContext';
 
 
 export default function PetCard({ pet }) {
-  const [isPreview, setIsPreview] = useState(true)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPreview, setIsPreview] = useState(true);
   const [orgName, setOrgName] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(pet.length - 1)
-  const [lastDirection, setLastDirection] = useState()
-  const currentIndexRef = useRef(currentIndex)
+  const [currentIndex, setCurrentIndex] = useState(pet.length - 1);
+  const [lastDirection, setLastDirection] = useState();
+  const currentIndexRef = useRef(currentIndex);
   const { user } = useUserContext();
 
   console.log(pet)
 
+  //Image click-thru functionality
+  const showNextImage = () => {
+    if (currentImageIndex < pet.photos.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
+  const showPrevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
+  const handleLeftClick = (e) => {
+    const { clientX } = e.nativeEvent;
+    const imageWidth = e.target.offsetWidth;
+
+    if (clientX < imageWidth / 2) {
+      showPrevImage();
+    }
+  };
+
+  const handleRightClick = (e) => {
+    const { clientX } = e.nativeEvent;
+    const imageWidth = e.target.offsetWidth;
+
+    if (clientX >= imageWidth / 2) {
+      showNextImage();
+    }
+  };
+
+  // TinderCard/Swiping functionality
   const childRefs = useMemo(
     () =>
     Array(pet.length)
@@ -60,6 +93,7 @@ export default function PetCard({ pet }) {
     await childRefs[index].current.restoreCard()
   }
 
+  //OrgData fetching -- incomplete
   useEffect(() => {
     const fetchOrgName = async () => {
       try {
@@ -73,17 +107,14 @@ export default function PetCard({ pet }) {
     fetchOrgName();
   }, [pet.organization_id])
 
+  // Toggle view
   const toggleCardView = () => {
       setIsPreview(!isPreview)
   }
 
+  // Add to favorites
   function handleAddToFavorites(){
     setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-
-    // const formData = new FormData();
-    // formData.append('pet_id', pet.id);
-    // formData.append('user_id', user.id)
-    // console.log(formData)
 
     const petObj = {
       "pet_id": pet.id,
@@ -115,15 +146,18 @@ export default function PetCard({ pet }) {
                 //Render card preview
                 <>
                   <div className="relative">
-                  {pet.photos && pet.photos.length > 0 ? (
+                   {pet.photos && pet.photos.length > 0 ? (
                       pet.photos.map((photo, index) => (
                         <Image 
                           className="w-full"
-                          key={index}
-                          src={photo.medium}
-                          alt={`Photo ${index + 1}`}
+                          src={pet.photos[currentImageIndex].medium}
+                          alt={`Photo ${currentImageIndex + 1}`}
                           width={500}
                           height={500}
+                          onClick={(e) => {
+                            handleLeftClick(e);
+                            handleRightClick(e);
+                          }}
                         />
                       ))
                     ) : (
