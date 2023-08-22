@@ -107,8 +107,8 @@ export default function PetCard({ pet }) {
             ref={childRefs[currentIndex]}
             className='swipe'
             key={pet.name}
-            onSwipe={(dir) => swiped(dir, pet.name, index)}
-            // onCardLeftScreen={() => outOfFrame(pet.name), index}  
+            onSwipe={(dir) => swiped(dir, pet.name, currentIndex)}
+            onCardLeftScreen={() => outOfFrame(pet.name, currentIndex)}  
           >
             <div className="w-full max-w-sm rounded overflow-hidden shadow-lg">
               {isPreview ? (
@@ -147,11 +147,15 @@ export default function PetCard({ pet }) {
                       </span>
                   </div>
                   <div className="flex justify-center">
-                    <FontAwesomeIcon style={{color: "red"}} icon={faXmark} size="2x"/>
+                    <button onClick={()=> swipe('left')}>
+                      <FontAwesomeIcon style={{color: "red"}} icon={faXmark} size="2x"/>
+                    </button>
                     <button onClick={handleAddToFavorites}>
                       <FontAwesomeIcon style={{color: "gold"}} icon={faStar} size="xl"/>
                     </button>
-                    <FontAwesomeIcon style={{color: "green"}} icon={faHeart} size="2x"/>
+                    <button onClick={() => swipe('right')}>
+                      <FontAwesomeIcon style={{color: "green"}} icon={faHeart} size="2x"/>
+                    </button>
                   </div>
                 </>
               ) : (
