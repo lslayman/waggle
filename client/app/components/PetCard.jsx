@@ -12,45 +12,64 @@ import { useUserContext } from '@/userContext';
 
 export default function PetCard({ pet }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageUrls, setImageUrls] = useState([]);
   const [isPreview, setIsPreview] = useState(true);
   const [orgName, setOrgName] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(pet.length - 1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
   const currentIndexRef = useRef(currentIndex);
   const { user } = useUserContext();
 
   console.log(pet)
 
+  //Extract org data & image URLs
+  useEffect(() => {
+    const fetchOrgName = async () => {
+      try {
+        const response = await axios.get('/api/organizations/${pet.organization_id}');
+        const orgData = response.data;
+        setOrgName(orgData.name);
+      } catch (error) {
+        console.error('Error fetching organization:', error);
+      }
+    };
+
+    const extractImageUrls = () => {
+      if (pet.photos && pet.photos.length > 0) {
+        const urls = pet.photos.map((photo) => photo.medium);
+        setImageUrls(urls);
+      }
+    };
+    
+    fetchOrgName();
+    extractImageUrls();
+  }, [pet.organization_id, pet.photos]);
+
   //Image click-thru functionality
   const showNextImage = () => {
-    if (currentImageIndex < pet.photos.length - 1) {
+    console.log("Right side clicked")
+    if (currentImageIndex < imageUrls.length - 1) {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
 
   const showPrevImage = () => {
+    console.log("Left side clicked")
     if (currentImageIndex > 0) {
       setCurrentImageIndex(currentImageIndex - 1);
     }
   };
 
-  const handleLeftClick = (e) => {
+  const handleImageClick = (e) => {
     const { clientX } = e.nativeEvent;
     const imageWidth = e.target.offsetWidth;
 
     if (clientX < imageWidth / 2) {
       showPrevImage();
-    }
-  };
-
-  const handleRightClick = (e) => {
-    const { clientX } = e.nativeEvent;
-    const imageWidth = e.target.offsetWidth;
-
-    if (clientX >= imageWidth / 2) {
+    } else {
       showNextImage();
     }
-  };
+  }
 
   // TinderCard/Swiping functionality
   const childRefs = useMemo(
@@ -93,20 +112,6 @@ export default function PetCard({ pet }) {
     await childRefs[index].current.restoreCard()
   }
 
-  //OrgData fetching -- incomplete
-  useEffect(() => {
-    const fetchOrgName = async () => {
-      try {
-        const response = await axios.get(`/api/organizations/${petData.organization_id}`);
-        const orgData = response.data;
-        setOrgName(orgData.name);
-      } catch (error) {
-        console.error('Error fetching organization:', error);
-      }
-    };
-    fetchOrgName();
-  }, [pet.organization_id])
-
   // Toggle view
   const toggleCardView = () => {
       setIsPreview(!isPreview)
@@ -135,7 +140,7 @@ export default function PetCard({ pet }) {
         <>
           <div className="flex justify-center">
           <TinderCard
-            ref={childRefs[currentIndex]}
+            ref={childRefs[currentIndexRef.current]}
             className='swipe'
             key={pet.name}
             onSwipe={(dir) => swiped(dir, pet.name, currentIndex)}
@@ -146,20 +151,19 @@ export default function PetCard({ pet }) {
                 //Render card preview
                 <>
                   <div className="relative">
-                   {pet.photos && pet.photos.length > 0 ? (
-                      pet.photos.map((photo, index) => (
-                        <Image 
-                          className="w-full"
-                          src={pet.photos[currentImageIndex].medium}
-                          alt={`Photo ${currentImageIndex + 1}`}
-                          width={500}
-                          height={500}
-                          onClick={(e) => {
-                            handleLeftClick(e);
-                            handleRightClick(e);
-                          }}
-                        />
-                      ))
+                    {imageUrls.length > 0 ? (
+                      <div
+                        className="image-container"
+                        onClick={handleImageClick}
+                        >
+                          <Image
+                            className="w-full"
+                            src={imageUrls[currentImageIndex]}
+                            alt={`Photo ${currentImageIndex + 1}`}
+                            width={500}
+                            height={500}
+                          />
+                      </div>
                     ) : (
                       <PlaceholderImage />
                     )}
@@ -195,19 +199,20 @@ export default function PetCard({ pet }) {
               ) : (
                 //Render full card
                   <>
-                    <div className="relative">
-
-                    {pet.photos && pet.photos.length > 0 ? (
-                      pet.photos.map((photo, index) => (
-                        <Image 
-                          className="w-full"
-                          key={index}
-                          src={photo.medium}
-                          alt={`Photo ${index + 1}`}
-                          width={500}
-                          height={500}
-                        />
-                      ))
+                  <div className="relative">
+                    {imageUrls.length > 0 ? (
+                      <div
+                        className="image-container"
+                        onClick={() => showNextImage()}
+                        >
+                          <Image
+                            className="w-full"
+                            src={imageUrls[currentImageIndex]}
+                            alt={`Photo ${currentImageIndex + 1}`}
+                            width={500}
+                            height={500}
+                          />
+                      </div>
                     ) : (
                       <PlaceholderImage />
                     )}

@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <>
     <div className="home">
-        {petData.animals.map(pet => (
+        {petData.animals && petData.animals.map(pet => (
           <PetCard key={pet.id} pet={pet} />
         ))}
     </div>
