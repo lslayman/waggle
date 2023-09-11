@@ -95,6 +95,82 @@ class ExternalPetsById(Resource):
         else: logging.debug(f"API request failed. Response:{response.status_code}, {response.text}")
         
         return{'error': 'An error occurred'}
+    
+class ExternalOrgs(Resource):
+    def get(self):
+
+        global petfinder_token
+
+        if check_token_expiration():
+            logging.debug("Token expired. Renewing token.")
+            renewed_token = renew_token_request()
+            if renewed_token:
+                token = renewed_token['access_token']
+            else:
+                logging.debug("Failed to renew token.")
+                return{'error': 'An error has occurred.'}
+            
+        else:
+            token = request_token()
+            if not token:
+                logging.debug("Failed to obtain token.")
+                return{'error': 'An error has occurred.'}
+
+        if type(token) is str:
+            real_token = token
+        else:
+            real_token = token['access_token']
+        headers = {
+            'Authorization': f'Bearer {real_token}',
+            'Content-Type': 'application/json',
+        }
+        
+        response = requests.get('https://api.petfinder.com/v2/organizations', headers=headers)
+
+        if response.ok:
+            data = response.json()
+            return data
+        else: logging.debug(f"API request failed. Response:{response.status_code}, {response.text}")
+        
+        return{'error': 'An error occurred'}
+    
+class ExternalOrgsById(Resource):
+    def get(self, id):
+
+        global petfinder_token
+
+        if check_token_expiration():
+            logging.debug("Token expired. Renewing token.")
+            renewed_token = renew_token_request()
+            if renewed_token:
+                token = renewed_token['access_token']
+            else:
+                logging.debug("Failed to renew token.")
+                return{'error': 'An error has occurred.'}
+            
+        else:
+            token = request_token()
+            if not token:
+                logging.debug("Failed to obtain token.")
+                return{'error': 'An error has occurred.'}
+
+        if type(token) is str:
+            real_token = token
+        else:
+            real_token = token['access_token']
+        headers = {
+            'Authorization': f'Bearer {real_token}',
+            'Content-Type': 'application/json',
+        }
+        
+        response = requests.get(f'https://api.petfinder.com/v2/organizations/{id}', headers=headers)
+
+        if response.ok:
+            data = response.json()
+            return data
+        else: logging.debug(f"API request failed. Response:{response.status_code}, {response.text}")
+        
+        return{'error': 'An error occurred'}
 
 class Users(Resource):
 
@@ -415,6 +491,8 @@ class Logout(Resource):
 
 api.add_resource(ExternalPets, '/external-pets')
 api.add_resource(ExternalPetsById, '/external-pets/<int:id>')
+api.add_resource(ExternalOrgs, '/external-orgs')
+api.add_resource(ExternalOrgsById, '/external-orgs/<int:id>')
 api.add_resource(Users, '/users')
 api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Pets, '/pets')

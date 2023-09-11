@@ -26,7 +26,7 @@ export default function PetCard({ pet }) {
   useEffect(() => {
     const fetchOrgName = async () => {
       try {
-        const response = await axios.get('/api/organizations/${pet.organization_id}');
+        const response = await axios.get(`/api/organizations/${pet.organization_id}`);
         const orgData = response.data;
         setOrgName(orgData.name);
       } catch (error) {
@@ -47,14 +47,12 @@ export default function PetCard({ pet }) {
 
   //Image click-thru functionality
   const showNextImage = () => {
-    console.log("Right side clicked")
     if (currentImageIndex < imageUrls.length - 1) {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
 
   const showPrevImage = () => {
-    console.log("Left side clicked")
     if (currentImageIndex > 0) {
       setCurrentImageIndex(currentImageIndex - 1);
     }

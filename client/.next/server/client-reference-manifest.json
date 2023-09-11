@@ -56,17 +56,25 @@
         "async": false
       }
     },
-    "(app-client)/./app/public/images/logo w name.png": {
+    "(app-client)/./app/public/images/placeholder.jpg": {
       "*": {
-        "id": "(sc_client)/./app/public/images/logo w name.png",
+        "id": "(sc_client)/./app/public/images/placeholder.jpg",
         "name": "*",
         "chunks": [],
         "async": false
       }
     },
-    "(app-client)/./app/components/NavBar.jsx": {
+    "(app-client)/./app/components/PetCard.jsx": {
       "*": {
-        "id": "(sc_client)/./app/components/NavBar.jsx",
+        "id": "(sc_client)/./app/components/PetCard.jsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/page.js": {
+      "*": {
+        "id": "(sc_client)/./app/page.js",
         "name": "*",
         "chunks": [],
         "async": false
@@ -88,14 +96,6 @@
         "async": false
       }
     },
-    "(app-client)/./node_modules/next/dist/client/link.js": {
-      "*": {
-        "id": "(sc_client)/./node_modules/next/dist/client/link.js",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
     "(app-client)/./node_modules/next/dist/shared/lib/head.js": {
       "*": {
         "id": "(sc_client)/./node_modules/next/dist/shared/lib/head.js",
@@ -104,25 +104,25 @@
         "async": false
       }
     },
-    "(app-client)/./app/public/images/placeholder.jpg": {
+    "(app-client)/./app/public/images/logo w name.png": {
       "*": {
-        "id": "(sc_client)/./app/public/images/placeholder.jpg",
+        "id": "(sc_client)/./app/public/images/logo w name.png",
         "name": "*",
         "chunks": [],
         "async": false
       }
     },
-    "(app-client)/./app/components/PetCard.jsx": {
+    "(app-client)/./app/components/NavBar.jsx": {
       "*": {
-        "id": "(sc_client)/./app/components/PetCard.jsx",
+        "id": "(sc_client)/./app/components/NavBar.jsx",
         "name": "*",
         "chunks": [],
         "async": false
       }
     },
-    "(app-client)/./app/page.js": {
+    "(app-client)/./node_modules/next/dist/client/link.js": {
       "*": {
-        "id": "(sc_client)/./app/page.js",
+        "id": "(sc_client)/./node_modules/next/dist/client/link.js",
         "name": "*",
         "chunks": [],
         "async": false
@@ -307,78 +307,6 @@
       ],
       "async": false
     },
-    "/home/lslayman/Development/code/waggle/client/app/public/images/logo w name.png": {
-      "id": "(app-client)/./app/public/images/logo w name.png",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/app/components/NavBar.jsx": {
-      "id": "(app-client)/./app/components/NavBar.jsx",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/app/userContext.js": {
-      "id": "(app-client)/./app/userContext.js",
-      "name": "*",
-      "chunks": [
-        "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/image.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "*",
-      "chunks": [
-        "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/image.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "*",
-      "chunks": [
-        "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/link.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/link.js",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/link.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/link.js",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/head.js": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "*",
-      "chunks": [
-        "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
-    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/head.js": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "*",
-      "chunks": [
-        "app/page:static/chunks/app/page.js"
-      ],
-      "async": false
-    },
     "/home/lslayman/Development/code/waggle/client/app/public/images/placeholder.jpg": {
       "id": "(app-client)/./app/public/images/placeholder.jpg",
       "name": "*",
@@ -403,6 +331,78 @@
       ],
       "async": false
     },
+    "/home/lslayman/Development/code/waggle/client/app/userContext.js": {
+      "id": "(app-client)/./app/userContext.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/image.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/image.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/shared/lib/head.js": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/shared/lib/head.js": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/app/public/images/logo w name.png": {
+      "id": "(app-client)/./app/public/images/logo w name.png",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/app/components/NavBar.jsx": {
+      "id": "(app-client)/./app/components/NavBar.jsx",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/home/lslayman/Development/code/waggle/client/node_modules/next/dist/esm/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
     "/home/lslayman/Development/code/waggle/client/app/(auth)/join/page.jsx": {
       "id": "(app-client)/./app/(auth)/join/page.jsx",
       "name": "*",
@@ -421,6 +421,10 @@
     }
   },
   "entryCSSFiles": {
+    "/home/lslayman/Development/code/waggle/client/app/page": {
+      "modules": [],
+      "files": []
+    },
     "/home/lslayman/Development/code/waggle/client/app/layout": {
       "modules": [
         "/home/lslayman/Development/code/waggle/client/app/globals.css",
@@ -430,10 +434,6 @@
       "files": [
         "static/css/app/layout.css"
       ]
-    },
-    "/home/lslayman/Development/code/waggle/client/app/page": {
-      "modules": [],
-      "files": []
     },
     "/home/lslayman/Development/code/waggle/client/app/(auth)/join/page": {
       "modules": [],
